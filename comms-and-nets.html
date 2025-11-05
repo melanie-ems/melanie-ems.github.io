@@ -1,55 +1,298 @@
-<div style="border: 2px solid #2196F3; border-radius: 10px; padding: 15px; background-color: #E3F2FD; margin: 10px 0;"> <strong>🔑 Key Concept:</strong> Serial transmission sends data one bit at a time over a single channel, while parallel transmission sends multiple bits simultaneously over multiple channels. </div>
-This topic is about the exchange of data between devices, commonly referred to as nodes.
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Communication & Networking — Melanie EMS</title>
+  <style>
+    :root{
+      --bg:#f7f9fb;
+      --card:#ffffff;
+      --accent:#0b5cff;
+      --muted:#6b7280;
+      --border:#e6e9ef;
+      --maxw:980px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color-scheme: light;
+    }
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:linear-gradient(180deg,var(--bg),#fff);
+      color:#111827;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+      padding:32px 20px;
+      display:flex;
+      justify-content:center;
+    }
 
-<div style="border: 2px solid #FF9800; border-radius: 10px; padding: 15px; background-color: #FFF3E0; margin: 10px 0;"> <strong>⚠️ Important:</strong> CSMA/CA is used in WiFi networks to avoid collisions, unlike CSMA/CD used in wired Ethernet. </div>
+    .wrap{
+      width:100%;
+      max-width:var(--maxw);
+    }
 
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:16px;
+      margin-bottom:20px;
+    }
+    header h1{
+      margin:0;
+      font-size:1.6rem;
+      letter-spacing:-0.01em;
+    }
+    header p { margin:4px 0 0; color:var(--muted); font-size:0.95rem; }
 
-[!TIP] Use mnemonics to remember the OSI model layers: "Please Do Not Throw Sausage Pizza Away"
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:10px;
+      padding:20px;
+      box-shadow:0 6px 18px rgba(11,92,255,0.04);
+      margin-bottom:18px;
+    }
 
-<div style="border: 2px solid #FF9800; border-radius: 10px; padding: 15px; background-color: #FFF3E0; margin: 10px 0;"> <strong>⚠️ Important:</strong> CSMA/CA is used in WiFi networks to avoid collisions, unlike CSMA/CD used in wired Ethernet. </div>
+    nav.toc{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+    nav.toc a{
+      text-decoration:none;
+      padding:8px 12px;
+      border-radius:8px;
+      background:transparent;
+      color:var(--accent);
+      border:1px solid transparent;
+      font-weight:600;
+      font-size:0.9rem;
+    }
+    nav.toc a:hover{ background:#f1f6ff; border-color:rgba(11,92,255,0.08) }
 
+    section h2{
+      margin-top:0;
+      font-size:1.15rem;
+      color:#0f1724;
+    }
+    section h3{
+      margin-bottom:8px;
+      margin-top:12px;
+      font-size:1.02rem;
+      color:#0b4bd8;
+    }
 
-# Communication
+    dl{ margin:0; }
+    dt{
+      font-weight:700;
+      margin-top:10px;
+      color:#0f1724;
+    }
+    dd{
+      margin:6px 0 12px 18px;
+      color:var(--muted);
+    }
 
-## Communication Methods
+    ul{ margin:0 0 12px 18px; color:var(--muted) }
+    li{ margin:6px 0 }
 
-- Define serial and parallel transmission methods and discuss the advantages of serial over parallel transmission.
-- Define and compare synchronous and asynchronous data transmission.
-- Describe the purpose of start and stop bits in asynchronous data transmission.
+    .term {
+      display:inline-block;
+      padding:2px 8px;
+      background:#f1f5f9;
+      border-radius:6px;
+      font-weight:600;
+      font-size:0.9rem;
+      color:#0b4bd8;
+    }
 
-## Communication Basics
+    .two-col{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+    }
+    @media (max-width:700px){
+      .two-col{ grid-template-columns:1fr }
+      header{ flex-direction:column; align-items:flex-start }
+      nav.toc{ width:100% }
+    }
 
-Define:
-- baud rate
-- bit rate
-- bandwidth
-- latency
-- protocol
+    footer{ color:var(--muted); font-size:0.9rem; margin-top:18px; text-align:center }
+    a.anchor{ color:var(--accent); text-decoration:none; font-weight:700 }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Communication & Networking</h1>
+        <p>Concise definitions and explanations for comms and basic networking concepts.</p>
+      </div>
+      <nav class="toc" aria-label="Table of contents">
+        <a href="#comm-methods">Methods</a>
+        <a href="#basics">Basics</a>
+        <a href="#topology">Topology</a>
+        <a href="#net-hosts">Networking between Hosts</a>
+        <a href="#wifi">WiFi</a>
+      </nav>
+    </header>
 
-- Differentiate between baud rate and bit rate.
-- Understand the relationship between bit rate and bandwidth.
+    <main>
+      <article class="card" id="comm-methods" aria-labelledby="comm-methods-title">
+        <h2 id="comm-methods-title">Communication Methods</h2>
 
-# Networking
+        <h3>Serial vs Parallel Transmission</h3>
+        <p>
+          <strong>Serial transmission</strong> sends bits sequentially over a single channel.
+          <strong>Parallel transmission</strong> sends multiple bits simultaneously across multiple channels.
+        </p>
+        <ul>
+          <li>Advantages of serial over parallel:
+            <ul>
+              <li>Lower cost and fewer wires.</li>
+              <li>Reduced crosstalk and skew problems at high speeds.</li>
+              <li>Better for long-distance links (less timing/alignment issues).</li>
+            </ul>
+          </li>
+        </ul>
 
-## Topology
+        <h3>Synchronous vs Asynchronous Transmission</h3>
+        <dl>
+          <dt>Synchronous</dt>
+          <dd>Data is sent in a continuous stream with sender and receiver sharing a clock or using embedded clocking. Efficient for high-speed bulk transfers (e.g., network links).</dd>
 
-Understand:
-- physical star topology
-- logical bus network topology
+          <dt>Asynchronous</dt>
+          <dd>Data is sent in discrete units (usually bytes) with no shared clock; timing is recovered from start/stop bits. Simpler for intermittent or low-latency transfers (e.g., serial console).</dd>
+        </dl>
 
-And:
-- differentiate between them
-- explain their operation
+        <h3>Start and Stop Bits (Asynchronous)</h3>
+        <p>
+          Start and stop bits frame each data byte so the receiver can detect the beginning and end of transmission when no shared clock exists:
+        </p>
+        <ul>
+          <li><span class="term">Start bit</span>: indicates the start of a data unit (usually a low level).</li>
+          <li><span class="term">Stop bit(s)</span>: indicate the end of the byte (one or two high-level bits); allow the receiver to re-synchronize between bytes.</li>
+        </ul>
+      </article>
 
-## Networking between Hosts
+      <article class="card" id="basics" aria-labelledby="basics-title">
+        <h2 id="basics-title">Communication Basics</h2>
 
-Explain the following and describe situations where they might be used:
-- peer-to-peer networking
-- client-server networking
+        <dl>
+          <dt>Baud rate</dt>
+          <dd>The number of signal changes (symbols) transmitted per second, measured in bauds.</dd>
 
-## Explain the purpose of WiFi
+          <dt>Bit rate</dt>
+          <dd>The number of bits transmitted per second (bps).</dd>
 
-- Be familiar with the components required for wireless networking.
-- Be familiar with how wireless networks are secured.
-- Explain the wireless protocol Carrier Sense Multiple Access with Collision Avoidance (CSMA/CA) with and without Request to Send / Clear to Send (RTS/CTS).
-- Be familiar with the purpose of Service Set Identifier (SSID).
+          <dt>Bandwidth</dt>
+          <dd>The range of frequencies available for signal transmission, often expressed in Hz; in networking it can mean capacity (bps).</dd>
+
+          <dt>Latency</dt>
+          <dd>The time delay between sending and receiving data (often measured in ms).</dd>
+
+          <dt>Protocol</dt>
+          <dd>A set of rules that define how data is formatted, transmitted, received, and interpreted between devices.</dd>
+        </dl>
+
+        <h3>Baud rate vs Bit rate</h3>
+        <p>
+          Baud rate counts symbols per second. If each symbol encodes more than one bit (using modulation or multi-level signaling), bit rate can exceed baud rate:
+        </p>
+        <ul>
+          <li>bit rate = baud rate × bits per symbol</li>
+        </ul>
+
+        <h3>Bit rate and Bandwidth</h3>
+        <p>Higher channel bandwidth (frequency range) typically allows higher bit rates, but efficiency depends on modulation, noise, and channel quality.</p>
+      </article>
+
+      <article class="card" id="topology" aria-labelledby="topology-title">
+        <h2 id="topology-title">Networking — Topology</h2>
+
+        <div class="two-col">
+          <div>
+            <h3>Physical Star Topology</h3>
+            <p>
+              Devices connect to a central hub or switch using individual links. Physical layout resembles a star.
+            </p>
+            <ul>
+              <li>Failure of a single peripheral doesn't break the whole network.</li>
+              <li>Central device is a single point of failure.</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3>Logical Bus Topology</h3>
+            <p>
+              Devices share a single broadcast medium logically: messages sent on the bus are visible to all nodes.
+            </p>
+            <ul>
+              <li>Often implemented over physical star (e.g., Ethernet switched networks operate logically as a shared medium when using hubs or with broadcast domains).</li>
+              <li>Collision handling (CSMA/CD historically) and addressing are used to manage access.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>Difference and Operation</h3>
+        <p>
+          Physical topology describes cabling and device placement; logical topology describes how data flows. Example: a switched Ethernet is physically star but can behave like a logical bus for broadcasts.
+        </p>
+      </article>
+
+      <article class="card" id="net-hosts" aria-labelledby="net-hosts-title">
+        <h2 id="net-hosts-title">Networking Between Hosts</h2>
+
+        <h3>Peer-to-Peer Networking</h3>
+        <p>Hosts have equal roles and can share resources directly. Useful for small workgroups or ad-hoc file sharing.</p>
+
+        <h3>Client-Server Networking</h3>
+        <p>Clients request services from centralized servers. Suitable for scalable services, centralized management, and security (e.g., web, email, authentication).</p>
+      </article>
+
+      <article class="card" id="wifi" aria-labelledby="wifi-title">
+        <h2 id="wifi-title">WiFi (Wireless Networking)</h2>
+
+        <h3>Purpose</h3>
+        <p>WiFi provides wireless LAN connectivity to enable network access without wired connections — mobility and easy deployment are primary benefits.</p>
+
+        <h3>Required Components</h3>
+        <ul>
+          <li>Wireless Access Point (AP) or router</li>
+          <li>Client devices with wireless adapters</li>
+          <li>Backhaul (wired network or internet link)</li>
+          <li>Optional: controller, switches, and authentication servers</li>
+        </ul>
+
+        <h3>Security</h3>
+        <ul>
+          <li>WPA2/WPA3 for encryption and authentication</li>
+          <li>Use strong passphrases, enterprise authentication (802.1X) for larger deployments</li>
+          <li>Network segmentation and guest networks for isolation</li>
+        </ul>
+
+        <h3>CSMA/CA (Carrier Sense Multiple Access with Collision Avoidance)</h3>
+        <p>
+          Stations listen before transmitting. If the medium is idle they transmit; if busy they wait a random backoff. Collisions are avoided (because wireless stations may not hear each other).
+        </p>
+        <p>
+          With RTS/CTS: a station sends RTS (Request to Send), AP or receiver replies CTS (Clear to Send). This reserves the medium and reduces hidden-node collisions.
+        </p>
+
+        <h3>Service Set Identifier (SSID)</h3>
+        <p>
+          The SSID is the network name broadcast by an AP. It's used by clients to discover and select which wireless network to join.
+        </p>
+      </article>
+
+      <footer>
+        Quick reference created for study/teaching. Modify sections as needed.
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
